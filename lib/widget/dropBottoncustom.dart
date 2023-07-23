@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
@@ -24,21 +26,24 @@ class _DropButtonCustomState extends State<DropButtonCustom> {
         isExpanded: true,
         hint: Text(
           widget.judul,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 14,
-            color: Theme.of(context).hintColor,
+            color: Colors.black,
           ),
         ),
         items: widget.item
-            .map((String item) => DropdownMenuItem<String>(
-                  value: item,
-                  child: Text(
-                    item,
-                    style: const TextStyle(
-                      fontSize: 14,
-                    ),
+            .map(
+              (String item) => DropdownMenuItem<String>(
+                value: item,
+                child: Text(
+                  item,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
                   ),
-                ))
+                ),
+              ),
+            )
             .toList(),
         // value: selectedValue,
         onChanged: widget.onChanged,
