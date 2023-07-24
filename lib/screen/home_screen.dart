@@ -1,5 +1,6 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:apk_translate/data/langage_code.dart';
-import 'package:apk_translate/model/translate_response.dart';
 import 'package:apk_translate/service/translate_service.dart';
 import 'package:apk_translate/style/color.dart';
 import 'package:apk_translate/widget/dropBottoncustom.dart';
