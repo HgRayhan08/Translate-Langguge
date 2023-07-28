@@ -1,16 +1,16 @@
 // To parse this JSON data, do
 //
-//     final translateResponse = translateResponseFromJson(jsonString);
+//     final listTranslateResponse = listTranslateResponseFromJson(jsonString);
 
 import 'dart:convert';
 
-TranslateResponse translateResponseFromJson(String str) =>
-    TranslateResponse.fromJson(json.decode(str));
+ListTranslateResponse listTranslateResponseFromJson(String str) =>
+    ListTranslateResponse.fromJson(json.decode(str));
 
-String translateResponseToJson(TranslateResponse data) =>
+String listTranslateResponseToJson(ListTranslateResponse data) =>
     json.encode(data.toJson());
 
-class TranslateResponse {
+class ListTranslateResponse {
   ResponseData responseData;
   bool quotaFinished;
   dynamic mtLangSupported;
@@ -20,7 +20,7 @@ class TranslateResponse {
   dynamic exceptionCode;
   List<Match> matches;
 
-  TranslateResponse({
+  ListTranslateResponse({
     required this.responseData,
     required this.quotaFinished,
     this.mtLangSupported,
@@ -31,8 +31,8 @@ class TranslateResponse {
     required this.matches,
   });
 
-  factory TranslateResponse.fromJson(Map<String, dynamic> json) =>
-      TranslateResponse(
+  factory ListTranslateResponse.fromJson(Map<String, dynamic> json) =>
+      ListTranslateResponse(
         responseData: ResponseData.fromJson(json["responseData"]),
         quotaFinished: json["quotaFinished"],
         mtLangSupported: json["mtLangSupported"],
@@ -62,10 +62,10 @@ class Match {
   String translation;
   String source;
   String target;
-  String quality;
+  dynamic quality;
   dynamic reference;
   int usageCount;
-  String subject;
+  String? subject;
   String createdBy;
   String lastUpdatedBy;
   DateTime createDate;
@@ -81,7 +81,7 @@ class Match {
     required this.quality,
     this.reference,
     required this.usageCount,
-    required this.subject,
+    this.subject,
     required this.createdBy,
     required this.lastUpdatedBy,
     required this.createDate,

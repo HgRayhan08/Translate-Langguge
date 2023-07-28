@@ -27,8 +27,10 @@ class ItemALternatifTranslate extends StatelessWidget {
         children: [
           Text(
             arti!,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
           ),
-          Text(kalimat!),
+          Text(kalimat!,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
         ],
       ),
     );
