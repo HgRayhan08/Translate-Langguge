@@ -6,6 +6,7 @@ import 'package:apk_translate/style/color.dart';
 import 'package:apk_translate/widget/dropBottoncustom.dart';
 import 'package:apk_translate/widget/item_aternatif_translate.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -54,6 +55,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   dropdowndua != "pilih bahasa") {
                 targetpertama = languageCodes[dropdownPertama]!;
                 targetkedua = languageCodes[dropdowndua]!;
+              } else if (textControler.text == "") {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => const Dialog(
+                    child: Center(
+                      heightFactor: 1.5,
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "Masukan Kalimat",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
               } else {
                 showDialog(
                   context: context,
@@ -175,17 +196,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               FutureBuilder(
-                future: translate().getTranslate(
-                  textNilai: textControler.text,
-                  target: targetpertama,
-                  language: targetkedua,
-                ),
+                future: Translate().getTranslate(
+                    textNilai: textControler.text,
+                    target: targetpertama,
+                    language: targetkedua),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    // ignore: no_leading_underscores_for_local_identifiers
-                    var _dataTranslate = snapshot.data;
+                    final _dataTranslate = snapshot.data;
+                    // print(_dataTranslate!.responseData.translatedText);
+                    // return Text("data");
                     return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 20),
@@ -199,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: fouth,
                           ),
                           child: Text(
-                            _dataTranslate!.responseData.translatedText,
+                            _dataTranslate?.responseData.translatedText ?? "",
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 16),
                           ),
@@ -224,14 +244,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 style: TextStyle(color: fouth),
                               ),
                               ListView.builder(
+                                itemCount: _dataTranslate?.matches.length,
+                                scrollDirection: Axis.vertical,
                                 shrinkWrap: true,
-                                itemCount: _dataTranslate.matches.length,
                                 itemBuilder: (context, index) {
                                   return ItemALternatifTranslate(
                                     arti: _dataTranslate
-                                        .matches[index].translation,
+                                        ?.matches[index].translation,
                                     kalimat:
-                                        _dataTranslate.matches[index].segment,
+                                        _dataTranslate?.matches[index].segment,
                                   );
                                 },
                               ),
@@ -240,8 +261,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     );
+                  } else {
+                    return const Padding(
+                      padding: EdgeInsets.only(top: 15),
+                      child: Center(
+                        child: Text(
+                          "Kalimat Masih belum dapat di translate",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w300),
+                        ),
+                      ),
+                    );
                   }
-                  return Container();
                 },
               ),
             ],
